@@ -14,13 +14,31 @@
 }
 
 .math-node.empty-math .math-render::before {
-	content: "(empty)";
-	color: red;
+	content: "Empty math";
+	font-weight: 600;
+  color: rgba(55, 53, 47, 0.6);
+	background: rgb(242,241,238);
+	padding: 0 4px;
+  border-radius: 3px;
 }
 
 .math-node .math-render.parse-error::before {
-	content: "(math error)";
-	color: red;
+	content: "Invalid math (parse error)";
+	font-weight: 600;
+	color: #eb5757;
+	background: rgba(235, 87, 87, 0.1);
+	padding: 0 4px;
+  border-radius: 3px;
+	cursor: help;
+}
+
+.math-node .math-render.other-error::before {
+	content: "Invalid math (other error)";
+	font-weight: 600;
+	color: #eb5757;
+	background: rgba(235, 87, 87, 0.1);
+	padding: 0 4px;
+  border-radius: 3px;
 	cursor: help;
 }
 

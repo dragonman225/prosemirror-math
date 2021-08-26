@@ -226,6 +226,7 @@ export class MathView implements NodeView, ICursorPosObserver {
 		try {
 			katex.render(texString, this._mathRenderElt, this._katexOptions);
 			this._mathRenderElt.classList.remove("parse-error");
+			this._mathRenderElt.classList.remove("other-error");
 			this.dom.setAttribute("title", "");
 		} catch (err) {
 			if (err instanceof ParseError) {
@@ -233,7 +234,9 @@ export class MathView implements NodeView, ICursorPosObserver {
 				this._mathRenderElt.classList.add("parse-error");
 				this.dom.setAttribute("title", err.toString());
 			} else {
-				throw err;
+				console.error(err);
+				this._mathRenderElt.classList.add("other-error");
+				this.dom.setAttribute("title", err.toString());
 			}
 		}
 	}
