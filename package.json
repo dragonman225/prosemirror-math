@@ -1,8 +1,8 @@
 {
-  "name": "@benrbray/prosemirror-math",
-  "version": "0.2.2",
-  "description": "Schema and plugins for first-class math support in ProseMirror.",
-  "repository": "github:benrbray/prosemirror-math",
+  "name": "@dragonman225/prosemirror-math",
+  "version": "0.2.3",
+  "description": "A fork of @benrbray/prosemirror-math.",
+  "repository": "github:dragonman225/prosemirror-math",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
