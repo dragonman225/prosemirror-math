@@ -210,6 +210,7 @@ class MathView {
         try {
             katex.render(texString, this._mathRenderElt, this._katexOptions);
             this._mathRenderElt.classList.remove("parse-error");
+            this._mathRenderElt.classList.remove("other-error");
             this.dom.setAttribute("title", "");
         }
         catch (err) {
@@ -219,7 +220,9 @@ class MathView {
                 this.dom.setAttribute("title", err.toString());
             }
             else {
-                throw err;
+                console.error(err);
+                this._mathRenderElt.classList.add("other-error");
+                this.dom.setAttribute("title", err.toString());
             }
         }
     }
@@ -752,15 +755,17 @@ const mathSelectPlugin = new Plugin({
  *
  * @param mathNodeType An instance for either your math_inline or math_display
  *     NodeType.  Must belong to the same schema that your EditorState uses!
+ * @param initialText (optional) The initial source content for the math editor.
  */
-function insertMathCmd(mathNodeType) {
+function insertMathCmd(mathNodeType, initialText = "") {
     return function (state, dispatch) {
         let { $from } = state.selection, index = $from.index();
         if (!$from.parent.canReplaceWith(index, index, mathNodeType)) {
             return false;
         }
         if (dispatch) {
-            let tr = state.tr.replaceSelectionWith(mathNodeType.create({}));
+            let mathNode = mathNodeType.create({}, initialText ? state.schema.text(initialText) : null);
+            let tr = state.tr.replaceSelectionWith(mathNode);
             tr = tr.setSelection(NodeSelection.create(tr.doc, $from.pos));
             dispatch(tr);
         }
